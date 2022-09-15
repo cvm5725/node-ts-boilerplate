@@ -1,0 +1,13 @@
+{
+    "API_PORT": 4004,
+    "CORS_ALLOWED_ORIGINS": ["*"],
+    "dbs": {
+        "read": {
+            "host": "localhost:3306",
+            "user": "root",
+            "password": "skthakur32",
+            "database": "yogardens"
+        }
+    }
+}
+
