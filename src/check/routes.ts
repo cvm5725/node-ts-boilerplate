@@ -1,6 +1,6 @@
-import express, { Request, Response} from 'express';
+import express, { Request, Response, Router} from 'express';
 
-const checkRouter = express.Router()
+const checkRouter : Router = express.Router()
 export default checkRouter
 
 checkRouter.get('/', async (req: Request, res: Response) => {
