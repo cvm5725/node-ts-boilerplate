@@ -1,5 +1,5 @@
 {
-  "name": "yogardens-backend",
+  "name": "node-ts-boilerplate",
   "version": "1.0.0",
   "description": "Common Backend Service",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yogardens/yogardens-backend.git"
+    "url": "git+https://github.com/yogardens/node-ts-boilerplate.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yogardens/yogardens-backend/issues"
+    "url": "https://github.com/yogardens/node-ts-boilerplate/issues"
   },
-  "homepage": "https://github.com/yogardens/yogardens-backend#readme",
+  "homepage": "https://github.com/yogardens/node-ts-boilerplate#readme",
   "devDependencies": {
     "tsc": "^2.0.4",
     "tsc-watch": "^5.0.3"
