@@ -5,8 +5,8 @@
         "read": {
             "host": "localhost:3306",
             "user": "root",
-            "password": "skthakur32",
-            "database": "yogardens"
+            "password": "",
+            "database": ""
         }
     }
 }
