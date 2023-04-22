@@ -20,7 +20,7 @@ module.exports = {
     test: {
       key: '~/testing-server.pem',
       user: 'ubuntu',
-      host: '150.0.1.64',
+      host: 'server_ip',
       ref: 'origin/dev',
       repo: `https://${process.env.GIT_USER}:${process.env.GIT_PASS}@github.com/${process.env.REPO_NAME}.git`,
       path: '/disk2/pm2/api', // your path to deploy

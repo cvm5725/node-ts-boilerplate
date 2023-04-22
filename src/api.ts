@@ -1,12 +1,13 @@
 import {promisify} from 'util'
 
-import express, { Request, Response } from 'express'
+import express, { Request, Response, Application } from 'express'
 import cors from 'cors'
 import { createPool, Pool } from 'mysql'
 
 import { API_PORT, CORS_ALLOWED_ORIGINS, dbs } from '../configs.json'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+
 
 import logger from './utils/logger'
 
@@ -19,13 +20,15 @@ export type FortifiedRequest = Request & {
 
 export const databases: Record<string,Pool> = {}
 
-export const API = express()
+export const API : Application = express()
 API.use(cors({
   origin: (CORS_ALLOWED_ORIGINS || ['*']).join(',')
 }))
 API.use(bodyParser.urlencoded({ extended: false }));
 API.use(bodyParser.json());
 API.use(cookieParser());
+
+
 
 (async () => {
   await Promise.all(Object.entries(dbs).map(async ([key, dbConfig]) => {
