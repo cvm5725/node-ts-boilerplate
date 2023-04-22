@@ -8,6 +8,8 @@ import { API_PORT, CORS_ALLOWED_ORIGINS, dbs } from '../configs.json'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
+import logger from './utils/logger'
+
 export type FortifiedRequest = Request & {
   metadata: {
     incomingQuery: Record<string,any>
@@ -30,11 +32,11 @@ API.use(cookieParser());
     const database = createPool(dbConfig)
     database.query = promisify(database.query).bind(database) as any
     try {
-      console.log(`Checking database ${key}`)
-      console.log(await database.query(`select now();`))
+      logger.info(`Checking database ${key}`)
+      logger.info("checking db query",await database.query(`select now();`))
       databases[`${key}`] = database
     } catch ({message}) {
-      console.log(`DBERROR: ${message}`)
+      logger.error(`DBERROR: ${message}`)
       process.exit(1)
     }
   }))

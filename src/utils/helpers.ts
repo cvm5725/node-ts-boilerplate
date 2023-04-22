@@ -3,17 +3,12 @@ import { readFile } from 'fs/promises'
 import { realpathSync } from 'fs'
 import axios from 'axios';
 import * as crypto from "crypto"
-import * as  jwt from 'jsonwebtoken'
 import moment from 'moment'
 
 const DEFAULT_QUERY_LIMIT = 10
 const MAX_QUERY_LIMIT = 100
 const DEFAULT_OFFSET = 0
-const MAX_USER_SIGNUP_FNAME = 10
-const MAX_USER_SIGNUP_MNAME = 10
-const MAX_USER_SIGNUP_LNAME = 10
-const MAX_USER_SIGNUP_EMAIL = 150
-const MAX_USER_SIGNUP_NAME = 100
+
 
 export const JWT_SECRET_STRING = "xoxo_dashboard"
 export const MAX_AGE = 3 * 24 * 60 * 60;
@@ -69,53 +64,7 @@ export function encryptPassword(password : string){
   return crypto.createHash('sha256').update(password as string).digest('base64');
 }
 
-export function  validateSignupData  (req : Request) {
-  const { query, params, body } = req
-  const {first_name,middle_name = "",last_name,email, password} = query as Record<string,any>
-  const passwordRegex : RegExp = new RegExp("^(?!.* )(?=.*[0-9])(?=.{8,})");
-  const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if(!first_name){
-    return {error : true ,  msg : "First Name is required"}
-  }
-  if(!last_name){
-    return {error : true ,  msg : "Last Name is required"}
-  }
-  if(typeof first_name === "string" && first_name.length > MAX_USER_SIGNUP_FNAME){
-    return {error : true ,  msg : `First Name length should be ${MAX_USER_SIGNUP_FNAME} characters`}
-  }
-  if(typeof middle_name === "string" && middle_name.length > MAX_USER_SIGNUP_LNAME){
-    return {error : true ,  msg : `Middle Name length should be ${MAX_USER_SIGNUP_MNAME} characters`}
-  }
-  if(typeof last_name === "string" && last_name.length > MAX_USER_SIGNUP_LNAME){
-    return {error : true ,  msg : `Last Name length should be ${MAX_USER_SIGNUP_LNAME} characters`}
-  }
-  if(!email){
-    return {error : true ,  msg : "Email ID is required"}
-  }
-  if(typeof email === "string" && email.length > MAX_USER_SIGNUP_EMAIL){
-    return {error : true ,  msg : `Email length should be ${MAX_USER_SIGNUP_EMAIL} characters`}
-  }
-  if(mailFormat.test(email as string) == false){
-    return {error : true ,  msg : "Please enter a valid email"}
-  }
-  if(!password){
-    return {error : true ,  msg : "Password is required"}
-  }
-  if(passwordRegex.test(password as string) == false){
-    return {error : true ,  msg : "Password must contain atleast 8 characters and 1 numeric"}
-  }
-  return{
-    error : false,
-    msg : ""
-  }
-}
-
-export const createToken = (id : string, email : any) => {
-  return jwt.sign({ id, email }, JWT_SECRET_STRING, {
-    expiresIn: MAX_AGE
-  });
-};
-
+// to  call external api calls
 export const makeApiCall = async (url : string,method : string,payload = {},headers = {} ) => {
   const  data = JSON.stringify({...payload});
   const config = {
@@ -129,6 +78,7 @@ export const makeApiCall = async (url : string,method : string,payload = {},head
   return await axios(config)
 }
 
+// to check valid dates
 export const isValidDate = (dateLabel : string, DATE_FORMAT : string = "YYYY-MM-DD") : boolean =>{
   return moment(dateLabel,DATE_FORMAT,true).isValid();
 }
